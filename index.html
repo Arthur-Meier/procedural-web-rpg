@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RPG de Mundo Aberto</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div id="app">
+      <canvas id="gameCanvas" aria-label="Jogo RPG em mundo aberto"></canvas>
+
+      <div id="hud" class="hud hidden">
+        <div id="hudTop" class="hud-top"></div>
+        <div id="hudSide" class="hud-side"></div>
+        <div id="hudBottom" class="hud-bottom"></div>
+        <div id="hudMessage" class="hud-message hidden"></div>
+      </div>
+
+      <div id="overlayVeil" class="overlay-veil">
+        <section id="titlePanel" class="panel">
+          <p class="eyebrow">Projeto base modular</p>
+          <h1>RPG de Mundo Aberto</h1>
+          <p class="panel-text">
+            Explore o mapa procedural, enfrente slimes, colete recursos e gerencie seus saves.
+          </p>
+          <div class="button-stack">
+            <button id="newGameButton" class="primary">Novo Jogo</button>
+            <button id="showLoadButton">Carregar</button>
+            <button id="exitButton">Sair</button>
+          </div>
+        </section>
+
+        <section id="titleLoadPanel" class="panel hidden">
+          <p class="eyebrow">Carregar progresso</p>
+          <div class="panel-header">
+            <div>
+              <h2>Slots salvos</h2>
+              <p class="panel-text small">Escolha um slot para continuar de onde voce parou.</p>
+            </div>
+            <button id="backToTitleButton">Voltar</button>
+          </div>
+          <div id="titleLoadSlots" class="slot-list" style="margin-top: 24px;"></div>
+        </section>
+
+        <section id="pausePanel" class="panel hidden">
+          <p class="eyebrow">Jogo pausado</p>
+          <h2>Pause</h2>
+          <div class="button-stack compact">
+            <button id="resumeButton" class="primary">Continuar</button>
+            <button id="backToMenuButton">Voltar ao menu</button>
+          </div>
+
+          <div class="two-column">
+            <div class="slot-section">
+              <h3>Salvar</h3>
+              <div id="pauseSaveSlots" class="slot-list"></div>
+            </div>
+            <div class="slot-section">
+              <h3>Carregar</h3>
+              <div id="pauseLoadSlots" class="slot-list"></div>
+            </div>
+          </div>
+        </section>
+
+        <section id="gameOverPanel" class="panel hidden">
+          <p class="eyebrow">Voce caiu em batalha</p>
+          <h2>Game Over</h2>
+          <div class="button-stack compact">
+            <button id="retryButton" class="primary">Novo Jogo</button>
+            <button id="gameOverMenuButton">Voltar ao menu</button>
+          </div>
+          <div class="slot-section">
+            <h3>Carregar save</h3>
+            <div id="gameOverLoadSlots" class="slot-list"></div>
+          </div>
+        </section>
+
+        <section id="mapPanel" class="panel map-panel hidden">
+          <h2>Exploracao</h2>
+          <canvas id="mapCanvas" width="520" height="520"></canvas>
+        </section>
+
+        <section id="statsPanel" class="panel hidden">
+          <div class="panel-header">
+            <div>
+              <h2>Atributos</h2>
+            </div>
+            <button id="closeStatsButton" class="primary">Fechar</button>
+          </div>
+          <div id="statsOverview" class="stats-overview"></div>
+          <div id="statsAllocation" class="stats-allocation"></div>
+        </section>
+
+        <section id="inventoryPanel" class="panel inventory-panel hidden">
+          <div class="panel-header">
+            <div>
+              <h2>Inventario</h2>
+            </div>
+            <button id="closeInventoryButton" class="primary">Fechar</button>
+          </div>
+          <div class="inventory-workspace">
+            <div class="inventory-hero-layout">
+              <div id="inventoryCharacter" class="inventory-character"></div>
+              <div id="inventoryEquipment" class="inventory-equipment"></div>
+            </div>
+            <div class="inventory-workbench-layout">
+              <div class="inventory-workbench-panel">
+                <div class="inventory-section-heading">
+                  <h3>Workbench</h3>
+                  <small>9 x 9</small>
+                </div>
+                <div id="craftingWorkbench" class="crafting-workbench"></div>
+              </div>
+              <div class="inventory-output-panel">
+                <div class="inventory-section-heading">
+                  <h3>Saida</h3>
+                  <small>Preview</small>
+                </div>
+                <div id="craftingOutput" class="crafting-output"></div>
+              </div>
+            </div>
+          </div>
+          <div class="inventory-storage">
+            <div class="inventory-section-heading">
+              <h3>Inventario</h3>
+              <small id="inventoryCapacity"></small>
+            </div>
+            <div id="inventoryPanelGrid" class="inventory-panel-grid"></div>
+          </div>
+        </section>
+
+        <section id="questPanel" class="panel quest-panel hidden">
+          <p class="eyebrow">Quadro de missoes</p>
+          <div class="panel-header">
+            <div>
+              <h2>Missoes</h2>
+            </div>
+            <button id="closeQuestButton" class="primary">Fechar</button>
+          </div>
+          <div id="questBoardList" class="quest-list"></div>
+        </section>
+      </div>
+    </div>
+
+    <script type="module" src="./dist/src/main.js"></script>
+  </body>
+</html>
