@@ -28,15 +28,15 @@ export const FIREBALL_BURN_CHANCE = 0.1;
 export const BURN_TICK_INTERVAL = 1;
 export const BURN_DAMAGE_PER_TICK = 1;
 
-export const ENEMY_MAX_ALIVE = 100;
+export const ENEMY_MAX_ALIVE = 1000;
 export const ENEMY_RESPAWN_DELAY = 10;
 
 export const PLAYER_BASE_STATS: PlayerStats = {
-  strength: 100,
+  strength: 10,
   agility: 10,
-  intelligence: 100,
-  luck: 1000,
-  constitution: 1000
+  intelligence: 10,
+  luck: 10,
+  constitution: 10
 };
 
 export const WEAPONS: Record<WeaponId, WeaponDefinition> = {
