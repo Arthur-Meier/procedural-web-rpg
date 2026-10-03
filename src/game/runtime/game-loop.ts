@@ -6,6 +6,7 @@ import { ProgressionSystem } from "../systems/progression-system.js";
 import { QuestSystem } from "../systems/quest-system.js";
 import { SpawnSystem } from "../systems/spawn-system.js";
 import { InputManager } from "../input.js";
+import { stopPlayerAnimation } from "../state/player-animation.js";
 import type { Player, UiState } from "../types.js";
 import { World } from "../world.js";
 
@@ -43,23 +44,58 @@ interface GameLoopCallbacks {
 }
 
 export class GameLoop {
+  private frameHandle: number | null = null;
+  private manualStepping = false;
+
   constructor(
     private readonly host: GameLoopHost,
     private readonly callbacks: GameLoopCallbacks
   ) {}
 
   start(): void {
-    requestAnimationFrame((timestamp) => this.frame(timestamp));
+    this.frameHandle = requestAnimationFrame((timestamp) => this.frame(timestamp));
+  }
+
+  /** Switch to controlled stepping only when the browser validation hook is called. */
+  advanceTime(milliseconds: number): void {
+    if (!Number.isFinite(milliseconds) || milliseconds < 0) {
+      throw new Error("O intervalo de simulacao deve ser finito e nao negativo.");
+    }
+
+    this.manualStepping = true;
+    if (this.frameHandle !== null) {
+      cancelAnimationFrame(this.frameHandle);
+      this.frameHandle = null;
+    }
+
+    let remaining = milliseconds / 1000;
+    if (remaining === 0) {
+      this.runFrame(0);
+    }
+    while (remaining > 0.000000001) {
+      const dt = Math.min(remaining, 1 / 60);
+      this.host.lastTimestamp += dt * 1000;
+      this.runFrame(dt);
+      remaining = Math.max(0, remaining - dt);
+    }
   }
 
   private frame(timestamp: number): void {
+    if (this.manualStepping) {
+      return;
+    }
+
     if (!this.host.lastTimestamp) {
       this.host.lastTimestamp = timestamp;
     }
 
     const dt = clamp((timestamp - this.host.lastTimestamp) / 1000, 0, 0.05);
     this.host.lastTimestamp = timestamp;
+    this.runFrame(dt);
+    this.frameHandle = requestAnimationFrame((nextTimestamp) => this.frame(nextTimestamp));
+  }
 
+  private runFrame(dt: number): void {
     this.handleGlobalInput();
 
     if (this.host.uiState === "playing") {
@@ -75,12 +111,14 @@ export class GameLoop {
     ) {
       this.update(dt);
     } else {
+      if (this.host.player) {
+        stopPlayerAnimation(this.host.player);
+      }
       this.updateMessage(dt);
     }
 
     this.host.render();
     this.host.input.endFrame();
-    requestAnimationFrame((nextTimestamp) => this.frame(nextTimestamp));
   }
 
   private handleGlobalInput(): void {
@@ -156,6 +194,7 @@ export class GameLoop {
 
     if (this.host.player.hp <= 0 && this.host.uiState !== "gameOver") {
       this.host.player.hp = 0;
+      stopPlayerAnimation(this.host.player);
       this.host.uiState = "gameOver";
       this.host.refreshSlotLists();
       this.host.syncUi();

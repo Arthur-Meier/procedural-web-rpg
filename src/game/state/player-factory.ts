@@ -90,6 +90,7 @@ export function createPlayer(snapshot: PlayerSeed | null = null): Player {
     gold: snapshot?.gold ?? 0,
     inventory: createInventory(snapshot?.inventory),
     facingAngle: snapshot?.facingAngle ?? 0,
+    animation: { walking: false, elapsed: 0 },
     invulnerability: snapshot?.invulnerability ?? 0,
     meleeCooldown: snapshot?.meleeCooldown ?? 0,
     magicCooldown: snapshot?.magicCooldown ?? 0,

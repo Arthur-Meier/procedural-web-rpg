@@ -4,9 +4,58 @@ import { getFacingDirection } from "../../state-helpers.js";
 import { angleBetween } from "../../utils.js";
 import type { BreakableObject, Drop } from "../../types.js";
 import { WorldRenderLayerBase } from "../base-layer.js";
+import { EnvironmentSpriteRenderer, getBreakableSprite, getEnvironmentVisualHash } from "../environment-sprites.js";
+import { ItemSpriteRenderer } from "../item-sprites.js";
+import { treeWindFrame } from "../wind.js";
 
 export class EnvironmentLayer extends WorldRenderLayerBase {
+  private readonly sprites = new EnvironmentSpriteRenderer();
+  private readonly itemSprites = new ItemSpriteRenderer();
+
+  getVisibleBreakables(): BreakableObject[] {
+    const bounds = this.getCameraBounds();
+    const visible: BreakableObject[] = [];
+    for (const chunk of this.world.getActiveChunks()) {
+      for (const object of chunk.objects) {
+        // Tall canopies can remain on screen when their trunks are below the view.
+        if (object.x >= bounds.minX - 2.6 && object.x <= bounds.maxX + 2.6 &&
+          object.y >= bounds.minY - 1.1 && object.y <= bounds.maxY + 4.7) {
+          visible.push(object);
+        }
+      }
+    }
+    return visible;
+  }
+
+  getBreakableBaseY(object: BreakableObject): number {
+    return object.y + object.radius * (object.kind === "crate" ? 0.62 : 0.5);
+  }
+
+  getHouseBaseY(): number {
+    return SPAWN_HOUSE_FOOTPRINT.y + SPAWN_HOUSE_FOOTPRINT.height / 2;
+  }
+
+  drawGroundShadows(objects: readonly BreakableObject[]): void {
+    const houseX = SPAWN_HOUSE_FOOTPRINT.x * PIXELS_PER_METER;
+    const houseY = this.getHouseBaseY() * PIXELS_PER_METER;
+    this.drawContactShadow(houseX + 6, houseY, SPAWN_HOUSE_FOOTPRINT.width * PIXELS_PER_METER * 0.6, 27, 0.28);
+    for (const object of objects) {
+      const radius = object.radius * PIXELS_PER_METER;
+      const baseY = this.getBreakableBaseY(object) * PIXELS_PER_METER;
+      const width = radius * (object.kind === "tree" ? 1.16 : object.kind === "rock" ? 0.94 : 0.8);
+      this.drawContactShadow(object.x * PIXELS_PER_METER + 4, baseY, width, radius * 0.35, 0.26);
+    }
+  }
+
   drawSpawnHouse(): void {
+    const houseX = SPAWN_HOUSE.x * PIXELS_PER_METER;
+    const houseBaseY = this.getHouseBaseY() * PIXELS_PER_METER;
+    const houseSprite = getEnvironmentVisualHash("spawnHouse", this.seed) % 2 === 0 ? "timberHouse" : "stoneHouse";
+    // A uniform scale keeps the pitched roof and walls proportional. The central
+    // front doorstep remains anchored to the existing collision footprint.
+    if (this.sprites.draw(this.ctx, houseSprite, houseX, houseBaseY, 280)) {
+      return;
+    }
     const x = SPAWN_HOUSE.x * PIXELS_PER_METER;
     const y = SPAWN_HOUSE.y * PIXELS_PER_METER;
     const width = SPAWN_HOUSE.width * PIXELS_PER_METER;
@@ -28,19 +77,6 @@ export class EnvironmentLayer extends WorldRenderLayerBase {
     const wallTop = footprintTop + wallInsetTop;
     const wallWidth = footprintWidth - wallInsetX * 2;
     const wallHeight = footprintHeight - wallInsetTop - wallInsetBottom;
-
-    this.ctx.fillStyle = "rgba(0, 0, 0, 0.16)";
-    this.ctx.beginPath();
-    this.ctx.ellipse(
-      footprintX,
-      footprintY + footprintHeight * 0.48,
-      footprintWidth * 0.64,
-      footprintHeight * 0.18,
-      0,
-      0,
-      Math.PI * 2
-    );
-    this.ctx.fill();
 
     this.ctx.fillStyle = "rgba(137, 102, 58, 0.28)";
     this.ctx.beginPath();
@@ -273,20 +309,27 @@ export class EnvironmentLayer extends WorldRenderLayerBase {
   }
 
   drawBreakables(): void {
-    for (const chunk of this.world.getActiveChunks()) {
-      for (const object of chunk.objects) {
-        if (object.kind === "tree") {
-          this.drawTree(object);
-        } else if (object.kind === "rock") {
-          this.drawRock(object);
-        } else {
-          this.drawCrate(object);
-        }
+    for (const object of this.getVisibleBreakables()) {
+      this.drawBreakable(object);
+    }
+  }
 
-        if (object.hp < object.maxHp) {
-          this.drawBar(object.x, object.y - object.radius - 0.36, object.hp / object.maxHp, "#f0c95a");
-        }
+  drawBreakable(object: BreakableObject): void {
+    const visual = getBreakableSprite(object, this.seed);
+    const drawn = this.sprites.draw(this.ctx, visual.id, object.x * PIXELS_PER_METER,
+      this.getBreakableBaseY(object) * PIXELS_PER_METER, visual.size,
+      object.kind === "tree" ? treeWindFrame(this.lastTimestamp, object.x, object.y, getEnvironmentVisualHash(object.id, this.seed)) : undefined);
+    if (!drawn) {
+      if (object.kind === "tree") {
+        this.drawTree(object);
+      } else if (object.kind === "rock") {
+        this.drawRock(object);
+      } else {
+        this.drawCrate(object);
       }
+    }
+    if (object.hp < object.maxHp) {
+      this.drawBar(object.x, object.y - object.radius - 0.36, object.hp / object.maxHp, "#f0c95a");
     }
   }
 
@@ -295,6 +338,8 @@ export class EnvironmentLayer extends WorldRenderLayerBase {
       const bob = Math.sin(drop.life * 4 + drop.id) * 5;
       const x = drop.x * PIXELS_PER_METER;
       const y = drop.y * PIXELS_PER_METER + bob;
+
+      if (this.itemSprites.draw(this.ctx, drop, x, y, drop.y * PIXELS_PER_METER)) continue;
 
       if (drop.kind === "gold") {
         this.drawGoldDropVisual(x, y);
@@ -309,10 +354,6 @@ export class EnvironmentLayer extends WorldRenderLayerBase {
     const x = object.x * PIXELS_PER_METER;
     const y = object.y * PIXELS_PER_METER;
     const radius = object.radius * PIXELS_PER_METER;
-    this.ctx.fillStyle = "rgba(0, 0, 0, 0.18)";
-    this.ctx.beginPath();
-    this.ctx.ellipse(x, y + 18, radius * 1.05, radius * 0.62, 0, 0, Math.PI * 2);
-    this.ctx.fill();
 
     const barkGradient = this.ctx.createLinearGradient(x, y - radius * 0.8, x, y + radius);
     barkGradient.addColorStop(0, "#7c532f");
@@ -357,11 +398,6 @@ export class EnvironmentLayer extends WorldRenderLayerBase {
     const y = object.y * PIXELS_PER_METER;
     const radius = object.radius * PIXELS_PER_METER;
 
-    this.ctx.fillStyle = "rgba(0, 0, 0, 0.16)";
-    this.ctx.beginPath();
-    this.ctx.ellipse(x, y + 18, radius, radius * 0.46, 0, 0, Math.PI * 2);
-    this.ctx.fill();
-
     const stoneGradient = this.ctx.createLinearGradient(x - radius, y - radius, x + radius, y + radius);
     stoneGradient.addColorStop(0, "#b7c1c7");
     stoneGradient.addColorStop(0.5, "#7f8b96");
@@ -403,8 +439,6 @@ export class EnvironmentLayer extends WorldRenderLayerBase {
     const x = object.x * PIXELS_PER_METER;
     const y = object.y * PIXELS_PER_METER;
     const size = object.radius * PIXELS_PER_METER * 1.6;
-    this.ctx.fillStyle = "rgba(0, 0, 0, 0.16)";
-    this.ctx.fillRect(x - size / 2, y + size / 2 - 8, size, 14);
 
     this.ctx.fillStyle = "#aa6e3c";
     this.ctx.fillRect(x - size / 2, y - size / 2, size, size);
@@ -428,6 +462,21 @@ export class EnvironmentLayer extends WorldRenderLayerBase {
     this.ctx.arc(x - size * 0.24, y - size * 0.18, 2.5, 0, Math.PI * 2);
     this.ctx.arc(x + size * 0.24, y + size * 0.18, 2.5, 0, Math.PI * 2);
     this.ctx.fill();
+  }
+
+  private drawContactShadow(x: number, y: number, width: number, height: number, opacity: number): void {
+    this.ctx.save();
+    this.ctx.translate(x, y);
+    this.ctx.scale(width, height);
+    const gradient = this.ctx.createRadialGradient(0, 0, 0.12, 0, 0, 1);
+    gradient.addColorStop(0, `rgba(20, 27, 22, ${opacity})`);
+    gradient.addColorStop(0.55, `rgba(20, 27, 22, ${opacity * 0.54})`);
+    gradient.addColorStop(1, "rgba(20, 27, 22, 0)");
+    this.ctx.fillStyle = gradient;
+    this.ctx.beginPath();
+    this.ctx.arc(0, 0, 1, 0, Math.PI * 2);
+    this.ctx.fill();
+    this.ctx.restore();
   }
 
   private drawGoldDropVisual(x: number, y: number): void {
@@ -539,9 +588,9 @@ export class EnvironmentLayer extends WorldRenderLayerBase {
     this.ctx.fill();
 
     const slimeGradient = this.ctx.createRadialGradient(x - 3, y - 6, 2, x, y, 12);
-    slimeGradient.addColorStop(0, "#dcffbf");
-    slimeGradient.addColorStop(0.6, "#93e05a");
-    slimeGradient.addColorStop(1, "#439b42");
+    slimeGradient.addColorStop(0, "#bffaff");
+    slimeGradient.addColorStop(0.6, "#13bee5");
+    slimeGradient.addColorStop(1, "#086baa");
     this.ctx.fillStyle = slimeGradient;
     this.ctx.beginPath();
     this.ctx.arc(x, y, 11, 0, Math.PI * 2);

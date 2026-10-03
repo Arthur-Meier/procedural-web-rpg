@@ -1,0 +1,240 @@
+{
+  "format": "environment-sprites-v1",
+  "image": "forest-props.png",
+  "width": 768,
+  "height": 768,
+  "cellWidth": 256,
+  "cellHeight": 256,
+  "columns": 3,
+  "rows": 3,
+  "palette": [
+    "#171b20",
+    "#272b2b",
+    "#373e3b",
+    "#4c5149",
+    "#656a5e",
+    "#818474",
+    "#a2a48e",
+    "#c4c3ab",
+    "#202b22",
+    "#293b29",
+    "#344a2c",
+    "#405832",
+    "#51663a",
+    "#667b42",
+    "#7d8e4b",
+    "#96a458",
+    "#b3b86a",
+    "#cbd084",
+    "#24352f",
+    "#30483a",
+    "#405d43",
+    "#527551",
+    "#678960",
+    "#87a273",
+    "#29231f",
+    "#3b2e25",
+    "#513b2b",
+    "#674b33",
+    "#7e5b3c",
+    "#96704a",
+    "#af8759",
+    "#c5a170",
+    "#d9b88c",
+    "#edcfa4",
+    "#3b2725",
+    "#57352b",
+    "#724633",
+    "#8d583b",
+    "#a66b48",
+    "#c18559",
+    "#ddaa76",
+    "#4a292a",
+    "#66382e",
+    "#834638",
+    "#a05b45",
+    "#b97553",
+    "#d29365",
+    "#eab586",
+    "#2b3440",
+    "#3e4954",
+    "#56616b",
+    "#737c83",
+    "#929a9b",
+    "#b4b8b1",
+    "#d5d5c5",
+    "#eee8d6",
+    "#32343b",
+    "#514b47",
+    "#75695b",
+    "#a19379",
+    "#c6bda2",
+    "#e4d9bc",
+    "#182939",
+    "#3e5868"
+  ],
+  "sprites": [
+    {
+      "name": "oak-tree",
+      "row": 0,
+      "column": 0,
+      "width": 256,
+      "height": 256,
+      "anchor": {
+        "x": 128,
+        "y": 224
+      },
+      "id": "oakTree",
+      "x": 0,
+      "y": 0,
+      "file": "sprites/oak-tree.png",
+      "source": "sprites/oak-tree.aseprite"
+    },
+    {
+      "name": "pine-tree",
+      "row": 0,
+      "column": 1,
+      "width": 256,
+      "height": 256,
+      "anchor": {
+        "x": 128,
+        "y": 224
+      },
+      "id": "pineTree",
+      "x": 256,
+      "y": 0,
+      "file": "sprites/pine-tree.png",
+      "source": "sprites/pine-tree.aseprite"
+    },
+    {
+      "name": "birch-tree",
+      "row": 0,
+      "column": 2,
+      "width": 256,
+      "height": 256,
+      "anchor": {
+        "x": 128,
+        "y": 224
+      },
+      "id": "birchTree",
+      "x": 512,
+      "y": 0,
+      "file": "sprites/birch-tree.png",
+      "source": "sprites/birch-tree.aseprite"
+    },
+    {
+      "name": "gray-rock",
+      "row": 1,
+      "column": 0,
+      "width": 256,
+      "height": 256,
+      "anchor": {
+        "x": 128,
+        "y": 224
+      },
+      "id": "grayRock",
+      "x": 0,
+      "y": 256,
+      "file": "sprites/gray-rock.png",
+      "source": "sprites/gray-rock.aseprite"
+    },
+    {
+      "name": "moss-rock",
+      "row": 1,
+      "column": 1,
+      "width": 256,
+      "height": 256,
+      "anchor": {
+        "x": 128,
+        "y": 224
+      },
+      "id": "mossRock",
+      "x": 256,
+      "y": 256,
+      "file": "sprites/moss-rock.png",
+      "source": "sprites/moss-rock.aseprite"
+    },
+    {
+      "name": "wood-crate",
+      "row": 1,
+      "column": 2,
+      "width": 256,
+      "height": 256,
+      "anchor": {
+        "x": 128,
+        "y": 224
+      },
+      "id": "woodCrate",
+      "x": 512,
+      "y": 256,
+      "file": "sprites/wood-crate.png",
+      "source": "sprites/wood-crate.aseprite"
+    },
+    {
+      "name": "timber-house",
+      "row": 2,
+      "column": 0,
+      "width": 256,
+      "height": 256,
+      "anchor": {
+        "x": 128,
+        "y": 224
+      },
+      "id": "timberHouse",
+      "x": 0,
+      "y": 512,
+      "file": "sprites/timber-house.png",
+      "source": "sprites/timber-house.aseprite"
+    },
+    {
+      "name": "weathered-crate",
+      "row": 2,
+      "column": 1,
+      "width": 256,
+      "height": 256,
+      "anchor": {
+        "x": 128,
+        "y": 224
+      },
+      "id": "weatheredCrate",
+      "x": 256,
+      "y": 512,
+      "file": "sprites/weathered-crate.png",
+      "source": "sprites/weathered-crate.aseprite"
+    },
+    {
+      "name": "stone-house",
+      "row": 2,
+      "column": 2,
+      "width": 256,
+      "height": 256,
+      "anchor": {
+        "x": 128,
+        "y": 224
+      },
+      "id": "stoneHouse",
+      "x": 512,
+      "y": 512,
+      "file": "sprites/stone-house.png",
+      "source": "sprites/stone-house.aseprite"
+    }
+  ],
+  "terrain": [
+    {
+      "id": "grass",
+      "file": "grass-ground.png",
+      "source": "grass-ground.aseprite",
+      "width": 128,
+      "height": 128,
+      "repeat": true
+    },
+    {
+      "id": "dirt",
+      "file": "dirt-ground.png",
+      "source": "dirt-ground.aseprite",
+      "width": 128,
+      "height": 128,
+      "repeat": true
+    }
+  ]
+}

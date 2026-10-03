@@ -1,0 +1,2 @@
+# Project-local installation; do not use a global graphify command.
+graphifyy==0.9.63

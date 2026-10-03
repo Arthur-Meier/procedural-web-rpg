@@ -1,0 +1,69 @@
+{
+  "image": "loot-items.png",
+  "size": {
+    "w": 320,
+    "h": 64
+  },
+  "cellSize": 64,
+  "columns": 5,
+  "rows": 1,
+  "frames": {
+    "slimeGoo": {
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "w": 64,
+        "h": 64
+      },
+      "pivot": {
+        "x": 32,
+        "y": 32
+      },
+      "drawSize": 40
+    },
+    "gold": {
+      "frame": {
+        "x": 64,
+        "y": 0,
+        "w": 64,
+        "h": 64
+      },
+      "pivot": {
+        "x": 32,
+        "y": 32
+      },
+      "drawSize": 36
+    },
+    "wood": {
+      "frame": {
+        "x": 128,
+        "y": 0,
+        "w": 64,
+        "h": 64
+      },
+      "pivot": {
+        "x": 32,
+        "y": 32
+      },
+      "drawSize": 44
+    },
+    "charcoal": {
+      "frame": {
+        "x": 192,
+        "y": 0,
+        "w": 64,
+        "h": 64
+      },
+      "pivot": {
+        "x": 32,
+        "y": 32
+      },
+      "drawSize": 40
+    },
+    "stone": {
+      "frame": { "x": 256, "y": 0, "w": 64, "h": 64 },
+      "pivot": { "x": 32, "y": 32 },
+      "drawSize": 44
+    }
+  }
+}

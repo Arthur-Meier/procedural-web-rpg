@@ -1,0 +1,163 @@
+{
+  "schemaVersion": 1,
+  "algorithm": "sha256",
+  "normalization": "utf8-lf-text",
+  "observedAt": "2026-10-03T04:14:13.357Z",
+  "semantic": "not-verified",
+  "humanReview": "not-verified",
+  "documents": {
+    "knowledge/architecture/decisions/ADR-0001.md": {
+      "documentHash": "974b9bcff8a096d008ee32c9183f9d141a1d3def01d1a9506d21b200714d8790",
+      "sources": {
+        "knowledge/index.md": "26f6da4af6f688496bcaccd911971980ca7a3922e359fe5d377eb0b1751be5a1",
+        "knowledge/concepts/knowledge-maintenance.md": "07663a2e4b151c6aebdb5b02f2e2f0d0424f6af48dfbd743394f87a941c2d612",
+        ".knowledge/templates/concept.md": "44e41ac7f8136fda1533e544f614684c1493f6fbfaba5919f59ed9425660c643",
+        ".knowledge/templates/adr.md": "e7cb6a7844c21ee02bbc391acf8448054f6f8f5d30083e9bdfd52325adc6e1e7",
+        ".knowledge/standard.json": "d59cf3ceaf94111188460c2cc2e0d4a3e81680d9c76e758bf1b50e369a00cd32",
+        "docs/KNOWLEDGE_STANDARD.md": "995ad2f7830ea0677f2e5d4d0b016e5d29bccc8ecd0f0cca7da1f10772446d8c",
+        "package.json": "4cf53696c845257a46109653447c00e725a42fab0aaa77bfeea8111d1eeed0df"
+      }
+    },
+    "knowledge/architecture/decisions/ADR-0002.md": {
+      "documentHash": "686b3c8fd511e973566d95da3cdbebeeb20466f3133a6d74769ac16cd4cbe2ef",
+      "sources": {
+        "src/main.ts": "85c02933cc028634e81bcb1f639b07cb5463ab63da9b9b6800d8cbcdd7040dfa",
+        "src/game/runtime/system-hosts.ts": "c3ef2928d0df69fdc2e21904cc406efd655b8f8528d8cb527ddb1e7adf10209b",
+        "src/game/runtime/game-loop.ts": "3ef87fcc551a9eb1a03c654aff694be364d89d633b8802d48fdac1962f74e2bb",
+        "src/game/systems/combat-system.ts": "b182dd7dcd0d9870821a5368b6e273825b832efa62110c341368720a5e56a0d2",
+        "src/game/systems/session-system.ts": "886de28c2780b9beabd6d0cd9018ecee12a530fb3f605c5916ede4963d7ec17f",
+        "src/game/render/world-renderer.ts": "31dbbcc4369969fc755e38e40939bcfe867b2415a2a470692faf0d52cd1105fa",
+        "docs/TECH_ARCHITECTURE.md": "3fdf6a98fb35bcae773422838e32934abe71c6607a9dccc3b72a14f010491d4b"
+      }
+    },
+    "knowledge/architecture/decisions/ADR-0003.md": {
+      "documentHash": "02efe4bb9e5e7c813ec41ece404def1623503d6f77799cd9fae9fd774bf4939d",
+      "sources": {
+        "src/game/save.ts": "c5afb96ffb360b5a041d04adc371269939ba4cf00ae819eee4c2c36784c6e232",
+        "src/game/types/session.ts": "2367d88fc87385325fe68b0535b8e3b07441438611756d5815b090d14fc70860",
+        "src/game/systems/session/snapshot-store.ts": "f29cd1399391e30d069cef0ce090bcc9227a1579558752e1d7b11c429ceac50f",
+        "src/game/world.ts": "3104c326a80db2aaa60d95f5b9fc0332f7ed0da61cf590850d73a165f6eb50b8",
+        "src/game/world/generation.ts": "a783468dbfb6bb20ff3973bdf761d9af0465499afeff153d70b249ee56e0c403",
+        "src/game/day-night.ts": "f915f333d8fa3c1e4fa6e138d6c9e1ed1570bc45480ee8e9ed24932d38d4bb38"
+      }
+    },
+    "knowledge/concepts/architecture.md": {
+      "documentHash": "d0d557aa67d2599d42dfd3f5afbc80ed7851c1c921d2e29c9e93d312e621eb95",
+      "sources": {
+        "src/main.ts": "85c02933cc028634e81bcb1f639b07cb5463ab63da9b9b6800d8cbcdd7040dfa",
+        "src/game/runtime/system-hosts.ts": "c3ef2928d0df69fdc2e21904cc406efd655b8f8528d8cb527ddb1e7adf10209b",
+        "src/game/runtime/game-loop.ts": "3ef87fcc551a9eb1a03c654aff694be364d89d633b8802d48fdac1962f74e2bb",
+        "src/game/systems/combat-system.ts": "b182dd7dcd0d9870821a5368b6e273825b832efa62110c341368720a5e56a0d2",
+        "src/game/systems/session-system.ts": "886de28c2780b9beabd6d0cd9018ecee12a530fb3f605c5916ede4963d7ec17f",
+        "src/game/ui/overlay-controller.ts": "dfbdcc64964605d96f579955505ce95726d588968fa411edc121b6c8fb9d0028",
+        "server.ts": "80191a9569679f36cafb7558c7de144dc178ebcf83f4a6dd12c9073fa99b2a8f",
+        "tsconfig.json": "49281d8f44955db43e6c9099f2237b6fa9a3bec1d682f7bcd9ea8ac97303d554",
+        "package.json": "4cf53696c845257a46109653447c00e725a42fab0aaa77bfeea8111d1eeed0df"
+      }
+    },
+    "knowledge/concepts/knowledge-maintenance.md": {
+      "documentHash": "07663a2e4b151c6aebdb5b02f2e2f0d0424f6af48dfbd743394f87a941c2d612",
+      "sources": {
+        "package.json": "4cf53696c845257a46109653447c00e725a42fab0aaa77bfeea8111d1eeed0df",
+        "README.md": "bbb7802b869bd0457cc275b2748b992e6df26e75d28a45e915b56b6ee3ebd798",
+        "knowledge/index.md": "26f6da4af6f688496bcaccd911971980ca7a3922e359fe5d377eb0b1751be5a1",
+        ".knowledge/templates/concept.md": "44e41ac7f8136fda1533e544f614684c1493f6fbfaba5919f59ed9425660c643",
+        ".knowledge/templates/adr.md": "e7cb6a7844c21ee02bbc391acf8448054f6f8f5d30083e9bdfd52325adc6e1e7",
+        ".knowledge/standard.json": "d59cf3ceaf94111188460c2cc2e0d4a3e81680d9c76e758bf1b50e369a00cd32",
+        ".knowledge/okf-profile.schema.json": "b357911dad413fb8fac91a4b56c57aa503db64ec83bb06b68155448bc025074a",
+        "docs/KNOWLEDGE_STANDARD.md": "995ad2f7830ea0677f2e5d4d0b016e5d29bccc8ecd0f0cca7da1f10772446d8c",
+        ".gitignore": "c9b5ce7e8fc75d9cb8de6cd6b2d8661dd96e5bbafebc6a6bded51531cc688fa2"
+      }
+    },
+    "knowledge/concepts/procedural-world.md": {
+      "documentHash": "e70c0aedceeb0b612ee99d946a188a37c00909b4fde2ea3b566b67913bc47b38",
+      "sources": {
+        "src/game/world.ts": "3104c326a80db2aaa60d95f5b9fc0332f7ed0da61cf590850d73a165f6eb50b8",
+        "src/game/world/generation.ts": "a783468dbfb6bb20ff3973bdf761d9af0465499afeff153d70b249ee56e0c403",
+        "src/game/world/queries.ts": "aaef194c23b9ac6ae12251845ba3361ba2ecab396e768fa468b447e82bfeb7d8",
+        "src/game/utils.ts": "758398b71d3c4bc0cd6681a51cf56f5818cc1df5dce66aa88c334d67e753ac50",
+        "src/game/constants.ts": "19c77605d0fb7f27dd1ecae4027f1bc9ac114a590b59d073b2abfe36abbb4eab",
+        "src/game/types/world.ts": "7773bb2aebcae22c9386bb95c0c72d918ad45732a8fd87c4645c6b487df5c153"
+      }
+    },
+    "knowledge/concepts/rendering-assets.md": {
+      "documentHash": "23d83a57b5c5de702abc4cec2af80f36015f150a735c5bf62bf39b115a7c1872",
+      "sources": {
+        "src/game/render/world-renderer.ts": "31dbbcc4369969fc755e38e40939bcfe867b2415a2a470692faf0d52cd1105fa",
+        "src/game/render/environment-sprites.ts": "ca75c615cd76fa178edb18da0da61a7c90560a54c33a20791570f562aa01ff91",
+        "src/game/render/wind.ts": "9f8e10de4c20a807215d452bf7adffc8d567df7edbddd02d3ca09806e505f85c",
+        "src/game/render/wind-leaves.ts": "6ada810bd8108b32971922edb43093b7ef342e26bde6296482a4da398608d216",
+        "assets/environment/tree-wind.png": "fa437d7124e6b87e001ecd18e74174ede6a19cd8f99632beafa360aa2085c462",
+        "assets/environment/tree-wind.json": "b88f7f4e24c00033af8e6b6894c76cc88b90c8159aff12b77ce4c47fcdc5b3f1",
+        "assets/environment/tree-wind.aseprite": "e63cfe27dc0011b6bc700e307a627ce92af0851dd0a73ad5e76819f5755a6b70",
+        "assets/environment/wind-leaves.png": "88ca386ea512254c7c71a38b7224c01066df2db3bc108f6f42f5bd2dd4ce277a",
+        "assets/environment/wind-leaves.json": "f474880fcdf1e3b557a466b063c0b27278a796799a00aaedb93e3aa350085754",
+        "assets/environment/wind-leaves.aseprite": "a000d4326d1f44c75209ca9eb2b09a0f9f7e2d8bb84e04e641d6437ad04019d2",
+        "scripts/prepare-wind-assets.mjs": "9197c5e24257f3b54e68226e1737f2597cf7448f22f05cbb1d7e6f00506ea87b",
+        "scripts/validate-wind.mjs": "561faaab23b34d9d794a68d18e47ecd225b0d64c3489cb0af5c24667ad975f39",
+        "scripts/validate-environment-art.mjs": "78b69a89168d463a162d9a360f44586d6ddad2c14746c093c4e81bf115ebfd4e",
+        "src/game/render/terrain-textures.ts": "b1c5de8dd2f2d926ed623ae25e1e46e5d487cf48eab24b7eebc701d5b8067556",
+        "assets/environment/grass-ground.png": "9e36ea09ad6fcb60e8a3d741598a010f5e2cfefe891629420f06e728f1e48f6b",
+        "assets/environment/dirt-ground.png": "65ae865cf49548ba86428185556a34fe4d7b52623a9f23d1057120eb28f8e13a",
+        "assets/environment/grass-ground.aseprite": "b0dcd33aef80575c0953363ed97d2880be18fd909228589d028984ecf6ff23b4",
+        "assets/environment/dirt-ground.aseprite": "fb121b10b3abefd2332bf81044e21a1f8319768f9005980a56a89ab41a58a69a",
+        "assets/environment/grass-ground-generated.png": "3d215a6c2d2dcc34b317d539c486cf7f0afb7050f93662cae534011cb4d50dfb",
+        "assets/environment/dirt-ground-generated.png": "87fd3519c6bb2d86b940b1c4f232a6fff5f65843b9c3174e06fe5cc45977e2ed",
+        "scripts/prepare-terrain-assets.mjs": "5e7fcf9dfddbbe61a9cd783903ca718f10659fe69b0f238de194107acaa4d4c6",
+        "scripts/validate-terrain-art.mjs": "5bf5cad4dd2034ffda9755936e695e1ead30f43311dc827e76267004463b1289",
+        "src/game/render/player-sprite.ts": "34ba8812555f465ef1f546ddd9ca9c0fa46da2cc805b9e8fc3b4bf899d57a802",
+        "src/game/render/slime-sprite.ts": "a19833216b0eb1359b23f0ce304825cab738b648fd96423bdd2dcd0d749c6c54",
+        "src/game/render/mage-sprite.ts": "86abba6740f172f1f07849adc948a2555cfc8b013908804842080bbcd9508c52",
+        "assets/enemies/RED_MAGE.md": "874df6ae3fd6bce186357551c0b6e7a1c52ad51674af9e9c5f7a5e55d1c7e204",
+        "assets/enemies/red-mage.png": "d3d3e1bc814cbc7b388ed48968a14952869a46e6e23ce8fe1fd5e4e1217c1454",
+        "assets/enemies/red-mage.json": "799f3f96da6d33ba59bd0eaed43a639d3c18e44d5aa5e4ffd166e5643119e556",
+        "assets/enemies/red-mage.aseprite": "5c7264a933259d6d3c3d60e337b1bb43e16dcbf4c45131d3120ad04235a4210b",
+        "Img referencias/Ficha de Referência do Mago Vermelho Maligno.png": "0fe20c7ced47e7bc6f1c809d5782aa141dc1bf424c9627e15ff0bc64a08f440d",
+        "scripts/prepare-mage-assets.mjs": "a6520c35bdfb885e7849717059d91db14aa0317786b9d604a8c46ba6780138a9",
+        "scripts/validate-mage-sprite.mjs": "00e4865357206542825e61ea62970fd789300b054424d33dfb5424d7a6467976",
+        "src/game/render/item-sprites.ts": "3e1be9360845ff4d982e2840af9f15a510c4ef529ff5b79eb1936b5e7bb815e7",
+        "src/game/render/layers/environment-layer.ts": "109f8c068519ea07e6b8f21190b6c05453b2e62ac52cc2b637e6118c239dca95",
+        "styles.css": "59cea83b96eb9eaf90af38b2b82e6e6009cca99babb7eac59b6f0fd41a420c58",
+        "index.html": "d776b1f6bf34891870cdad5b9ed087ef4b69cfea701e3670d907499f3dcf7f40",
+        "src/game/ui/panels/hud-panel.ts": "1f8324f212a7584d08770563e55f704ae7af49e6c988be3ecc0070fe1b546539",
+        "src/game/ui/panels/inventory-panel.ts": "48e8b6bcab9d1f0feca3b728741d04ac5a806db768ae0ed3f826e3c3ec0dc1a7",
+        "assets/ui/README.md": "10c096145df8c0895a5a123ec4c16a3bc5d716882934c1c9eb39a2deabd3b717",
+        "assets/ui/ui-icons.png": "776cac22adeb6ab8d80a2b90de5c44a220deec2e7da0ca4ad8709af3ea7196de",
+        "assets/ui/ui-icons.json": "08141011dfe5a9367b770c22e052a45a8de48054d535171b9862b129edb7b6fd",
+        "assets/ui/ui-icons.aseprite": "558f3305899d7b122f59380b6a08f1b2176a37939a182c0db1778ac7f17b1b3e",
+        "scripts/prepare-ui-assets.mjs": "01c15633856c726aac5b396f99c80751ad3396ba10dea735bbce1bbe65ab4b85",
+        "scripts/validate-ui-layout.mjs": "527a187ac4859b8cb7757a4b87928dd1a762a395a0aa1fb83e49317486246384",
+        "assets/items/README.md": "74bab53e5eb01cdd6110fa8844855776aca100daab72a738d5d9ea0e42bcdf3e",
+        "assets/items/loot-items.png": "d27c2fb548b23c4979b4c452072acc5cf0cc68ed13de7d1d9166ccecaa119e8c",
+        "assets/items/loot-items.aseprite": "f40d73ea7a7b702053f3cc454ef735fb399db4017d89122b060868612ca854f2",
+        "assets/items/loot-items.json": "64cde2e8c49699b5d057c9b3924a3f144244ffef8a6f584329e2e2a2ce406a49",
+        "scripts/prepare-item-assets.mjs": "394c5031f12c3e6a91b1d94f0d341aa0cc6537f6dea429f3950764b3a8d0f5ed",
+        "scripts/validate-item-sprites.mjs": "8e40a0283028e58c62badfcba73d47a5f077894e048f75be2c25140660f4bbbd",
+        "src/game/render/layers/entity-layer.ts": "c4a7f0058f21f9fa968dfd50fbbe111f9ecb08314701325b80bc69b2319ff9d4",
+        "src/game/render/layers/terrain-layer.ts": "c41476ac6ed0bc5f86cabffd081187d6b9c01ca84043bbf25590ae29e243a40e",
+        "src/game/ui/overlay-controller.ts": "dfbdcc64964605d96f579955505ce95726d588968fa411edc121b6c8fb9d0028",
+        "assets/environment/README.md": "b17743dfe5c5abe3efbd8fcb9d94252704b043fa1e58a67061960eb84595666d",
+        "assets/characters/README.md": "3e14b21902cab6732e6174737a5001eb7cf944fe73901ff7043e52bdbc2ed2be",
+        "assets/enemies/README.md": "114a3e24ed8d0ecf003c36a9ee7ab2e5afaf1fa8f2fd0f3258a588ddad38c85f",
+        "assets/enemies/blue-slime.png": "ee9957bd220b4986727c487c000b5fd9bb1738314de447b010588a4f66662534",
+        "assets/enemies/blue-slime.json": "c7cdff25dc4f51f89492c61821789e79599f6b42f2b662662d1d6bb86d4d9b12",
+        "docs/ART_DIRECTION.md": "950ff97d3dceae4734e437cb0233eebb62d92ef2ba7c0103683edaf3d24da195",
+        "scripts/prepare-slime-assets.mjs": "c1b68eee11fe45ec081e7dbdc2fe01346464bb1756402a60b8d64302e2c66bb1",
+        "scripts/validate-slime-sprite.mjs": "66cfcd31742854fc4809bcd7e9e8a0dcf95b12fe47eb640b0280824541191fe8"
+      }
+    },
+    "knowledge/concepts/save-system.md": {
+      "documentHash": "fa6dfeaef0108c80b3dd8cbc58ba27d8aff4ff58ec51c557601f06819c8a441e",
+      "sources": {
+        "src/game/save.ts": "c5afb96ffb360b5a041d04adc371269939ba4cf00ae819eee4c2c36784c6e232",
+        "src/game/types/session.ts": "2367d88fc87385325fe68b0535b8e3b07441438611756d5815b090d14fc70860",
+        "src/game/types/world.ts": "7773bb2aebcae22c9386bb95c0c72d918ad45732a8fd87c4645c6b487df5c153",
+        "src/game/systems/session-system.ts": "886de28c2780b9beabd6d0cd9018ecee12a530fb3f605c5916ede4963d7ec17f",
+        "src/game/systems/session/snapshot-store.ts": "f29cd1399391e30d069cef0ce090bcc9227a1579558752e1d7b11c429ceac50f",
+        "src/game/systems/session/lifecycle.ts": "75a3fe9e2f2f6a6b63a29b021da2514b17c60cad89f1fa71f3aef06cb25f9755",
+        "src/game/day-night.ts": "f915f333d8fa3c1e4fa6e138d6c9e1ed1570bc45480ee8e9ed24932d38d4bb38",
+        "src/game/constants.ts": "19c77605d0fb7f27dd1ecae4027f1bc9ac114a590b59d073b2abfe36abbb4eab"
+      }
+    }
+  }
+}

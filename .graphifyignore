@@ -1,0 +1,16 @@
+# Defense in depth. The wrapper stages only server.ts, src/, scripts/.
+.git/
+.runtime/
+node_modules/
+dist/
+assets/
+output/
+tests/
+docs/**
+knowledge/**
+prompts/
+Img referencias/
+**/.env*
+**/*.pem
+**/*.key
+**/*.sql

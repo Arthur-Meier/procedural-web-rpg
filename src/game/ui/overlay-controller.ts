@@ -42,6 +42,7 @@ interface OverlayControllerCallbacks {
   newGame(): void;
   goToTitle(): void;
   resumeGame(): void;
+  openPause(): void;
   refreshSlotLists(): void;
   renderStatsPanel(): void;
   renderInventoryPanel(): void;
@@ -78,6 +79,11 @@ export class OverlayController {
     getRequiredElement<HTMLButtonElement>("closeStatsButton").addEventListener("click", () => this.closeStats());
     getRequiredElement<HTMLButtonElement>("closeInventoryButton").addEventListener("click", () => this.closeInventory());
     getRequiredElement<HTMLButtonElement>("closeQuestButton").addEventListener("click", () => this.closeQuestBoard());
+    getRequiredElement<HTMLButtonElement>("closeMapButton").addEventListener("click", () => this.closeMap());
+    getRequiredElement<HTMLButtonElement>("hudInventoryButton").addEventListener("click", () => this.toggleInventory());
+    getRequiredElement<HTMLButtonElement>("hudStatsButton").addEventListener("click", () => this.toggleStats());
+    getRequiredElement<HTMLButtonElement>("hudMapButton").addEventListener("click", () => this.toggleMap());
+    getRequiredElement<HTMLButtonElement>("hudPauseButton").addEventListener("click", () => this.callbacks.openPause());
 
     this.host.mapCanvas.addEventListener("mousedown", (event: MouseEvent) => {
       if (event.button !== 0 || !this.host.mapOpen) {
@@ -132,6 +138,8 @@ export class OverlayController {
       this.host.inventoryOpen ||
       this.host.questBoardOpen;
     this.host.overlayVeil.classList.toggle("hidden", !overlayVisible);
+    this.host.overlayVeil.dataset.screen = this.host.uiState === "title"
+      ? (this.host.showingTitleLoads ? "load" : "title") : this.host.uiState;
     this.host.titlePanel.classList.toggle("hidden", this.host.uiState !== "title" || this.host.showingTitleLoads);
     this.host.titleLoadPanel.classList.toggle("hidden", this.host.uiState !== "title" || !this.host.showingTitleLoads);
     this.host.pausePanel.classList.toggle("hidden", this.host.uiState !== "paused");
@@ -141,7 +149,7 @@ export class OverlayController {
     this.host.inventoryPanel.classList.toggle("hidden", !this.host.inventoryOpen);
     this.host.questPanel.classList.toggle("hidden", !this.host.questBoardOpen);
 
-    this.host.hud.classList.toggle("hidden", !this.host.player || this.host.uiState === "title");
+    this.host.hud.classList.toggle("hidden", !this.host.player || overlayVisible);
     this.host.hudMessage.classList.toggle("hidden", !this.host.message);
 
     if (!this.host.mapOpen) {

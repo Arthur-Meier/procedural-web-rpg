@@ -41,6 +41,11 @@ export interface EquippedWeapons {
   staff: StaffDefinition;
 }
 
+export interface PlayerAnimation {
+  walking: boolean;
+  elapsed: number;
+}
+
 export interface Player {
   x: number;
   y: number;
@@ -54,6 +59,7 @@ export interface Player {
   gold: number;
   inventory: InventorySlot[];
   facingAngle: number;
+  animation?: PlayerAnimation;
   invulnerability: number;
   meleeCooldown: number;
   magicCooldown: number;

@@ -1,0 +1,54 @@
+# Dependencies and compiled output
+/node_modules/
+/dist/
+*.tsbuildinfo
+
+# Local evidence, isolated Graphify installation and generated artifacts
+/.runtime/
+/output/
+/graphify-out/
+/coverage/
+/.nyc_output/
+/.cache/
+/progress.md
+__pycache__/
+*.pyc
+
+# Local logs, editor/OS files and temporary backups
+*.log
+/.idea/
+/.vscode/
+.DS_Store
+Thumbs.db
+desktop.ini
+*.tmp
+*.temp
+*.bak
+*.orig
+*.swp
+*.swo
+
+# Credentials and machine-local configuration
+.env
+.env.*
+!.env.example
+!.env.*.example
+*.pem
+*.key
+*.p12
+*.pfx
+*.keystore
+
+# Local database files and sidecars
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+*.sqlite
+*.sqlite3
+*.sqlite-journal
+*.sqlite-wal
+*.sqlite-shm
+*.sqlite3-journal
+*.sqlite3-wal
+*.sqlite3-shm

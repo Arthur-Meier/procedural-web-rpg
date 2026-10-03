@@ -1,4 +1,4 @@
-import { SAVE_SLOT_COUNT } from "./game/constants.js";
+import { PIXELS_PER_METER, SAVE_SLOT_COUNT } from "./game/constants.js";
 import { DayNightSystem } from "./game/day-night.js";
 import { InputManager } from "./game/input.js";
 import { WorldRenderer } from "./game/render/world-renderer.js";
@@ -11,6 +11,7 @@ import { QuestSystem } from "./game/systems/quest-system.js";
 import { SessionSystem } from "./game/systems/session-system.js";
 import { SpawnSystem } from "./game/systems/spawn-system.js";
 import { createQuestBoardState } from "./game/state-helpers.js";
+import { getPlayerSpriteFrame } from "./game/state/player-animation.js";
 import { createGameUiElements } from "./game/ui/elements.js";
 import { renderInventoryPanel as renderInventoryPanelView, renderLoadList as renderLoadListView, renderSaveList as renderSaveListView, renderStatsPanel as renderStatsPanelView, updateHud as updateHudView } from "./game/ui/panels.js";
 import { OverlayController } from "./game/ui/overlay-controller.js";
@@ -26,6 +27,13 @@ import type {
   PlayerAuraEffect,
   QuestState
 } from "./game/app-types.js";
+
+declare global {
+  interface Window {
+    render_game_to_text(): string;
+    advanceTime(milliseconds: number): void;
+  }
+}
 
 class Game {
   canvas: HTMLCanvasElement; ctx: CanvasRenderingContext2D; mapCanvas: HTMLCanvasElement; mapContext: CanvasRenderingContext2D;
@@ -141,6 +149,7 @@ class Game {
       newGame: () => sessionSystem.newGame(),
       goToTitle: () => sessionSystem.goToTitle(),
       resumeGame: () => sessionSystem.resumeGame(),
+      openPause: () => sessionSystem.openPause(),
       refreshSlotLists: () => this.refreshSlotLists(),
       renderStatsPanel: () => this.renderStatsPanel(),
       renderInventoryPanel: () => this.renderInventoryPanel(),
@@ -369,6 +378,49 @@ class Game {
     this.hudMessage.textContent = text;
     this.overlayController.syncUi();
   }
+
+  renderGameToText(): string {
+    const round = (value: number): number => Math.round(value * 1000) / 1000;
+    const visible = (entity: { x: number; y: number }): boolean =>
+      Math.abs(entity.x - this.camera.x) <= this.camera.halfWidth + 1.5 &&
+      Math.abs(entity.y - this.camera.y) <= this.camera.halfHeight + 1.5;
+
+    return JSON.stringify({
+      coordinates: { origin: "world (0, 0), spawn hub", x: "right", y: "down", unit: "meter", pixelsPerMeter: PIXELS_PER_METER, angle: "radians; 0 = right, PI/2 = down" },
+      uiState: this.uiState,
+      overlays: { map: this.mapOpen, stats: this.statsOpen, inventory: this.inventoryOpen, quests: this.questBoardOpen },
+      seed: this.seed,
+      timestampMilliseconds: round(this.lastTimestamp),
+      dayCount: this.dayCount,
+      player: this.player ? {
+        x: round(this.player.x),
+        y: round(this.player.y),
+        radius: this.player.radius,
+        facingAngle: round(this.player.facingAngle),
+        hp: round(this.player.hp),
+        maxHp: this.player.maxHp,
+        level: this.player.level,
+        walking: this.player.animation?.walking ?? false,
+        animationElapsed: round(this.player.animation?.elapsed ?? 0),
+        sprite: getPlayerSpriteFrame(this.player),
+        cooldowns: { melee: round(this.player.meleeCooldown), magic: round(this.player.magicCooldown) }
+      } : null,
+      input: this.input.getAxis(),
+      camera: { x: round(this.camera.x), y: round(this.camera.y), halfWidth: this.camera.halfWidth, halfHeight: this.camera.halfHeight },
+      enemies: this.enemies.filter((enemy) => !enemy.dead && visible(enemy)).map((enemy) => ({
+        id: enemy.id, kind: enemy.kind, x: round(enemy.x), y: round(enemy.y), hp: round(enemy.hp), radius: enemy.radius
+      })),
+      projectiles: this.projectiles.filter(visible).map((projectile) => ({
+        id: projectile.id, x: round(projectile.x), y: round(projectile.y), owner: projectile.owner, element: projectile.element
+      })),
+      drops: this.drops.filter(visible).map((drop) => ({
+        id: drop.id, kind: drop.kind, x: round(drop.x), y: round(drop.y), amount: drop.amount
+      })),
+      message: this.message
+    });
+  }
 }
 
-new Game();
+const game = new Game();
+window.render_game_to_text = () => game.renderGameToText();
+window.advanceTime = (milliseconds) => game.gameLoop.advanceTime(milliseconds);

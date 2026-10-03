@@ -1,0 +1,53 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "required": ["standard", "standardVersion", "project", "bundle", "okf", "adr", "graphify", "validation"],
+  "properties": {
+    "standard": { "const": "procedural-web-rpg-knowledge" },
+    "standardVersion": { "const": "1.0.0" },
+    "project": { "type": "string", "minLength": 1 },
+    "bundle": { "const": "knowledge" },
+    "okf": {
+      "type": "object",
+      "required": ["version", "profile", "schema", "specification"],
+      "properties": {
+        "version": { "const": "0.2" },
+        "profile": { "const": "procedural-web-rpg-v1" },
+        "schema": { "const": ".knowledge/okf-profile.schema.json" },
+        "specification": { "type": "string", "pattern": "^https://" }
+      }
+    },
+    "adr": {
+      "type": "object",
+      "required": ["directory", "initialStatus", "acceptance"],
+      "properties": {
+        "directory": { "const": "knowledge/architecture/decisions" },
+        "initialStatus": { "const": "proposed" },
+        "acceptance": { "const": "explicit-human-decision" }
+      }
+    },
+    "graphify": {
+      "type": "object",
+      "required": ["package", "version", "processing", "maxWorkers", "clustering", "hooks", "runtime", "reference"],
+      "properties": {
+        "package": { "const": "graphifyy" },
+        "version": { "const": "0.9.63" },
+        "processing": { "const": "local-code-only" },
+        "maxWorkers": { "const": 2 },
+        "clustering": { "const": false },
+        "hooks": { "const": false },
+        "runtime": { "const": ".runtime/knowledge/graphify" },
+        "reference": { "type": "string", "pattern": "^https://" }
+      }
+    },
+    "validation": {
+      "type": "object",
+      "required": ["sourceBaseline", "semantic", "humanReview"],
+      "properties": {
+        "sourceBaseline": { "const": ".knowledge/source-baseline.json" },
+        "semantic": { "const": "not-verified" },
+        "humanReview": { "const": "not-verified" }
+      }
+    }
+  }
+}

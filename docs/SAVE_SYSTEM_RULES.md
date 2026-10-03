@@ -9,9 +9,9 @@
 ## Snapshot Shape
 
 - The saved object is a `GameSnapshot` with top-level `version`, `meta`, and `state`.
-- The current snapshot version is `2`.
+- The current snapshot writer emits version `4` in `SessionSnapshotStore.buildSnapshot(...)`.
 - `meta` stores slot number, save timestamp, level, XP, gold, HP, and a rounded player position.
-- `state` stores world seed, serialized world data, player data, live enemies, drops, pending respawns, runtime counters, and quests.
+- `state` stores world seed, serialized world data, player data, live enemies, drops, pending respawns, runtime counters, quests, day/night state, and day count.
 
 ## Save Behavior
 
@@ -28,6 +28,9 @@
 - Projectiles, particles, pending spell casts, enemy death effects, and player aura effects are reset on load instead of being persisted.
 - Pending respawns are restored from the snapshot and then topped up until tracked enemies plus pending respawns reach `ENEMY_MAX_ALIVE`.
 - Quests are restored through `hydrateQuestBoardState(...)`.
+- Load uses optional-field fallbacks for day/night state and day count. It does not dispatch migrations by snapshot version; backward compatibility must be verified separately before changing the snapshot contract.
+
+See the [save concept](../knowledge/concepts/save-system.md) and [proposed ADR-0003](../knowledge/architecture/decisions/ADR-0003.md) for source references and evidence boundaries.
 
 ## Slot Listing And Error Handling
 

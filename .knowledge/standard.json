@@ -1,0 +1,33 @@
+{
+  "$schema": "./standard.schema.json",
+  "standard": "procedural-web-rpg-knowledge",
+  "standardVersion": "1.0.0",
+  "project": "procedural-web-rpg",
+  "bundle": "knowledge",
+  "okf": {
+    "version": "0.2",
+    "profile": "procedural-web-rpg-v1",
+    "schema": ".knowledge/okf-profile.schema.json",
+    "specification": "https://github.com/GoogleCloudPlatform/open-knowledge-format/blob/main/SPEC.md"
+  },
+  "adr": {
+    "directory": "knowledge/architecture/decisions",
+    "initialStatus": "proposed",
+    "acceptance": "explicit-human-decision"
+  },
+  "graphify": {
+    "package": "graphifyy",
+    "version": "0.9.63",
+    "processing": "local-code-only",
+    "maxWorkers": 2,
+    "clustering": false,
+    "hooks": false,
+    "runtime": ".runtime/knowledge/graphify",
+    "reference": "https://github.com/Graphify-Labs/graphify/tree/v0.9.63"
+  },
+  "validation": {
+    "sourceBaseline": ".knowledge/source-baseline.json",
+    "semantic": "not-verified",
+    "humanReview": "not-verified"
+  }
+}

@@ -4,22 +4,34 @@ import { getFacingDirection } from "../../state-helpers.js";
 import { clamp, distance, lerp } from "../../utils.js";
 import type { EnemyEntity } from "../../types.js";
 import { WorldRenderLayerBase } from "../base-layer.js";
+import { PlayerSpriteRenderer } from "../player-sprite.js";
+import { SlimeSpriteRenderer } from "../slime-sprite.js";
+import { MageSpriteRenderer } from "../mage-sprite.js";
 
 export class EntityLayer extends WorldRenderLayerBase {
+  private readonly playerSprite = new PlayerSpriteRenderer();
+  private readonly slimeSprite = new SlimeSpriteRenderer();
+  private readonly mageSprite = new MageSpriteRenderer();
+
   drawEnemies(): void {
     for (const enemy of this.enemies) {
-      const x = enemy.x * PIXELS_PER_METER;
-      const y = enemy.y * PIXELS_PER_METER;
-      const radius = enemy.radius * PIXELS_PER_METER;
-      if (enemy.kind === Mage.kind) {
-        this.drawMageEnemy(enemy, x, y, radius);
-      } else {
-        this.drawSlimeEnemy(enemy, x, y, radius);
-      }
+      this.drawEnemy(enemy);
+    }
+  }
 
-      if (enemy.hp < enemy.maxHp || distance(enemy.x, enemy.y, this.player.x, this.player.y) < 3.2) {
-        this.drawBar(enemy.x, enemy.y - enemy.radius - 0.42, enemy.hp / enemy.maxHp, "#7cff91");
-      }
+  drawEnemy(enemy: EnemyEntity): void {
+    const x = enemy.x * PIXELS_PER_METER;
+    const y = enemy.y * PIXELS_PER_METER;
+    const radius = enemy.radius * PIXELS_PER_METER;
+    if (enemy.kind === Mage.kind) {
+      this.drawMageEnemy(enemy, x, y, radius);
+    } else {
+      this.drawSlimeEnemy(enemy, x, y, radius);
+    }
+
+    if (enemy.hp < enemy.maxHp || distance(enemy.x, enemy.y, this.player.x, this.player.y) < 3.2) {
+      const barOffset = enemy.kind === Mage.kind ? enemy.radius * 2.6 + 0.2 : enemy.radius + 0.42;
+      this.drawBar(enemy.x, enemy.y - barOffset, enemy.hp / enemy.maxHp, "#7cff91");
     }
   }
 
@@ -34,6 +46,13 @@ export class EntityLayer extends WorldRenderLayerBase {
     this.ctx.beginPath();
     this.ctx.ellipse(x, y + radius * 1.3, radius * 0.85, radius * 0.42, 0, 0, Math.PI * 2);
     this.ctx.fill();
+
+    if (this.playerSprite.draw(this.ctx, this.player, x, y + radius * 1.3, this.lastTimestamp)) {
+      if (this.player.swingVisualTimer > 0) {
+        this.drawSwordSwingEffect(x, y, radius);
+      }
+      return;
+    }
 
     this.ctx.save();
     this.ctx.translate(x, y);
@@ -167,15 +186,19 @@ export class EntityLayer extends WorldRenderLayerBase {
     this.ctx.ellipse(x, y + radius * 1.25, radius * 1.15, radius * 0.42, 0, 0, Math.PI * 2);
     this.ctx.fill();
 
+    if (this.slimeSprite.draw(this.ctx, enemy, x, y + radius * 1.25, radius, this.lastTimestamp)) {
+      return;
+    }
+
     this.ctx.save();
     this.ctx.translate(x, y);
     this.ctx.rotate(facing);
     this.ctx.scale(dashStretch, dashSquash);
 
     const slimeGradient = this.ctx.createLinearGradient(0, -radius * 1.2, 0, radius);
-    slimeGradient.addColorStop(0, enemy.hurtTimer > 0 ? "#d8ff9f" : "#b0ff98");
-    slimeGradient.addColorStop(0.45, enemy.dashTimer > 0 ? "#88f77f" : "#73db66");
-    slimeGradient.addColorStop(1, "#41a64a");
+    slimeGradient.addColorStop(0, enemy.hurtTimer > 0 ? "#e5fcff" : "#76eeff");
+    slimeGradient.addColorStop(0.45, enemy.dashTimer > 0 ? "#13ddff" : "#00b4f5");
+    slimeGradient.addColorStop(1, "#0769ca");
     this.ctx.fillStyle = slimeGradient;
     this.ctx.beginPath();
     this.ctx.moveTo(-radius * 0.98, radius * 0.18);
@@ -233,6 +256,9 @@ export class EntityLayer extends WorldRenderLayerBase {
     this.ctx.ellipse(x, y + radius * 1.3, radius * 1.05, radius * 0.34, 0, 0, Math.PI * 2);
     this.ctx.fill();
 
+    const cast = this.pendingSpellCasts.find(entry => entry.source === "enemy" && entry.sourceEnemyId === enemy.id && entry.remaining > 0);
+    if (this.mageSprite.draw(this.ctx, enemy, x, y + radius * 1.3, radius, this.lastTimestamp, cast)) return;
+
     this.ctx.save();
     this.ctx.translate(x, y);
     if (facing === "left" || facing === "right") {
@@ -242,11 +268,11 @@ export class EntityLayer extends WorldRenderLayerBase {
     }
 
     const robeGradient = this.ctx.createLinearGradient(0, -radius * 1.2, 0, radius * 1.3);
-    robeGradient.addColorStop(0, enemy.hurtTimer > 0 ? "#7fcfff" : "#58b8ff");
-    robeGradient.addColorStop(0.55, "#2e7dc8");
-    robeGradient.addColorStop(1, "#173d82");
+    robeGradient.addColorStop(0, enemy.hurtTimer > 0 ? "#ed9a8c" : "#bc4b4a");
+    robeGradient.addColorStop(0.55, "#842d35");
+    robeGradient.addColorStop(1, "#321d29");
 
-    this.ctx.fillStyle = "#1c2540";
+    this.ctx.fillStyle = "#201821";
     this.ctx.beginPath();
     this.ctx.ellipse(-radius * 0.24, radius * 0.94, radius * 0.18, radius * 0.24, 0, 0, Math.PI * 2);
     this.ctx.ellipse(radius * 0.24, radius * 0.94, radius * 0.18, radius * 0.24, 0, 0, Math.PI * 2);
@@ -262,37 +288,37 @@ export class EntityLayer extends WorldRenderLayerBase {
     this.ctx.closePath();
     this.ctx.fill();
 
-    this.ctx.fillStyle = "#11233d";
+    this.ctx.fillStyle = "#201821";
     this.ctx.fillRect(-radius * 0.42, radius * 0.14, radius * 0.84, radius * 0.08);
 
     if (facing === "left" || facing === "right") {
-      this.ctx.fillStyle = "#d8edf8";
+      this.ctx.fillStyle = "#bcb6a1";
       this.ctx.beginPath();
       this.ctx.ellipse(0, -radius * 0.42, radius * 0.28, radius * 0.36, 0, 0, Math.PI * 2);
       this.ctx.fill();
 
-      this.ctx.fillStyle = "#11233d";
+      this.ctx.fillStyle = "#201821";
       this.ctx.beginPath();
       this.ctx.arc(-radius * 0.02, -radius * 0.5, radius * 0.38, Math.PI, Math.PI * 2);
       this.ctx.fill();
       this.ctx.fillRect(-radius * 0.28, -radius * 0.52, radius * 0.34, radius * 0.12);
 
-      this.ctx.fillStyle = "#f3fbff";
+      this.ctx.fillStyle = "#fa4850";
       this.ctx.beginPath();
       this.ctx.arc(radius * 0.08, -radius * 0.43, Math.max(1.4, radius * 0.07), 0, Math.PI * 2);
       this.ctx.fill();
 
-      this.ctx.fillStyle = "#d8edf8";
+      this.ctx.fillStyle = "#bcb6a1";
       this.ctx.beginPath();
       this.ctx.ellipse(radius * 0.42, radius * 0.06, radius * 0.1, radius * 0.22, 0, 0, Math.PI * 2);
       this.ctx.fill();
     } else if (facing === "down") {
-      this.ctx.fillStyle = "#d8edf8";
+      this.ctx.fillStyle = "#bcb6a1";
       this.ctx.beginPath();
       this.ctx.arc(0, -radius * 0.38, radius * 0.34, 0, Math.PI * 2);
       this.ctx.fill();
 
-      this.ctx.fillStyle = "#11233d";
+      this.ctx.fillStyle = "#201821";
       this.ctx.beginPath();
       this.ctx.moveTo(-radius * 0.5, -radius * 0.28);
       this.ctx.quadraticCurveTo(0, -radius * 1.18, radius * 0.5, -radius * 0.28);
@@ -301,18 +327,18 @@ export class EntityLayer extends WorldRenderLayerBase {
       this.ctx.closePath();
       this.ctx.fill();
 
-      this.ctx.fillStyle = "#f3fbff";
+      this.ctx.fillStyle = "#fa4850";
       this.ctx.beginPath();
       this.ctx.arc(-radius * 0.14, -radius * 0.4, Math.max(1.4, radius * 0.07), 0, Math.PI * 2);
       this.ctx.arc(radius * 0.14, -radius * 0.4, Math.max(1.4, radius * 0.07), 0, Math.PI * 2);
       this.ctx.fill();
     } else {
-      this.ctx.fillStyle = "#11233d";
+      this.ctx.fillStyle = "#201821";
       this.ctx.beginPath();
       this.ctx.arc(0, -radius * 0.44, radius * 0.42, 0, Math.PI * 2);
       this.ctx.fill();
 
-      this.ctx.fillStyle = "#2b4e7b";
+      this.ctx.fillStyle = "#a13a40";
       this.ctx.beginPath();
       this.ctx.moveTo(-radius * 0.2, -radius * 0.58);
       this.ctx.lineTo(0, -radius * 0.8);
@@ -322,7 +348,7 @@ export class EntityLayer extends WorldRenderLayerBase {
       this.ctx.fill();
     }
 
-    this.ctx.strokeStyle = "#7ee0ff";
+    this.ctx.strokeStyle = "#c1a479";
     this.ctx.lineWidth = Math.max(2, radius * 0.12);
     this.ctx.beginPath();
     this.ctx.moveTo(radius * 0.56, -radius * 0.18);
@@ -337,9 +363,9 @@ export class EntityLayer extends WorldRenderLayerBase {
       -radius * 1.02,
       radius * 0.26
     );
-    orbGradient.addColorStop(0, "#effcff");
-    orbGradient.addColorStop(0.5, "#6fd2ff");
-    orbGradient.addColorStop(1, "#1f75d1");
+    orbGradient.addColorStop(0, "#ffdbb5");
+    orbGradient.addColorStop(0.5, "#fa4850");
+    orbGradient.addColorStop(1, "#9b1c32");
     this.ctx.fillStyle = orbGradient;
     this.ctx.beginPath();
     this.ctx.arc(radius * 1.02, -radius * 1.02, radius * 0.22, 0, Math.PI * 2);

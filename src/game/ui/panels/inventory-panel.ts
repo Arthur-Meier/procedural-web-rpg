@@ -44,25 +44,16 @@ function renderCharacterPreview(refs: InventoryPanelRefs, player: Player): void 
 
     <div class="inventory-character-stage">
       <div class="inventory-character-figure" aria-hidden="true">
-        <span class="inventory-character-shadow"></span>
-        <span class="inventory-character-cape"></span>
-        <span class="inventory-character-legs"></span>
-        <span class="inventory-character-boots"></span>
-        <span class="inventory-character-body"></span>
-        <span class="inventory-character-belt"></span>
-        <span class="inventory-character-head"></span>
-        <span class="inventory-character-hair"></span>
-        <span class="inventory-character-sword"></span>
-        <span class="inventory-character-staff"></span>
+        <span class="character-portrait"></span>
       </div>
     </div>
 
     <div class="inventory-character-loadout" aria-label="Armas equipadas">
       <div class="inventory-character-chip" data-tooltip="${player.weapons.sword.name}" aria-label="${player.weapons.sword.name}">
-        ${getWeaponTokenMarkup(player.weapons.sword.id)}
+        <span class="ui-glyph glyph-sword" aria-hidden="true"></span>
       </div>
       <div class="inventory-character-chip" data-tooltip="${player.weapons.staff.name}" aria-label="${player.weapons.staff.name}">
-        ${getWeaponTokenMarkup(player.weapons.staff.id)}
+        <span class="ui-glyph glyph-staff" aria-hidden="true"></span>
       </div>
     </div>
   `;

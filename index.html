@@ -15,28 +15,41 @@
         <div id="hudSide" class="hud-side"></div>
         <div id="hudBottom" class="hud-bottom"></div>
         <div id="hudMessage" class="hud-message hidden"></div>
+        <nav class="hud-navigation" aria-label="Menus do jogo">
+          <button id="hudInventoryButton" title="Inventário (I)"><span class="ui-glyph glyph-bag" aria-hidden="true"></span><span>Mochila</span><kbd>I</kbd></button>
+          <button id="hudStatsButton" title="Atributos (P)"><span class="ui-glyph glyph-stats" aria-hidden="true"></span><span>Atributos</span><kbd>P</kbd></button>
+          <button id="hudMapButton" title="Mapa (M)"><span class="ui-glyph glyph-map" aria-hidden="true"></span><span>Mapa</span><kbd>M</kbd></button>
+          <button id="hudPauseButton" title="Pausa (Esc)"><span class="ui-glyph glyph-pause" aria-hidden="true"></span><span>Pausa</span><kbd>Esc</kbd></button>
+        </nav>
       </div>
 
       <div id="overlayVeil" class="overlay-veil">
         <section id="titlePanel" class="panel">
-          <p class="eyebrow">Projeto base modular</p>
-          <h1>RPG de Mundo Aberto</h1>
-          <p class="panel-text">
-            Explore o mapa procedural, enfrente slimes, colete recursos e gerencie seus saves.
-          </p>
-          <div class="button-stack">
-            <button id="newGameButton" class="primary">Novo Jogo</button>
-            <button id="showLoadButton">Carregar</button>
-            <button id="exitButton">Sair</button>
+          <div class="title-content">
+            <div class="title-signature"><span class="ui-glyph glyph-crest" aria-hidden="true"></span><span>Uma jornada pela floresta</span></div>
+            <h1>RPG de<br />Mundo Aberto</h1>
+            <p class="panel-text">Um caminho novo a cada jornada.</p>
+            <div class="button-stack title-actions">
+              <button id="newGameButton" class="primary">Nova jornada <span aria-hidden="true">→</span></button>
+              <button id="showLoadButton">Continuar <span aria-hidden="true">→</span></button>
+              <button id="exitButton" class="quiet-button">Sair</button>
+            </div>
+            <p class="title-footer">Explore. Enfrente. Descubra.</p>
+          </div>
+          <div class="title-forest" aria-hidden="true">
+            <img class="title-tree title-tree-back" src="./assets/environment/sprites/pine-tree.png" alt="" />
+            <img class="title-tree title-tree-oak" src="./assets/environment/sprites/oak-tree.png" alt="" />
+            <img class="title-tree title-tree-birch" src="./assets/environment/sprites/birch-tree.png" alt="" />
+            <span class="title-traveler character-portrait"></span>
           </div>
         </section>
 
         <section id="titleLoadPanel" class="panel hidden">
-          <p class="eyebrow">Carregar progresso</p>
+          <p class="eyebrow">Sua jornada</p>
           <div class="panel-header">
             <div>
-              <h2>Slots salvos</h2>
-              <p class="panel-text small">Escolha um slot para continuar de onde voce parou.</p>
+              <h2>Continuar</h2>
+              <p class="panel-text small">Escolha um progresso salvo.</p>
             </div>
             <button id="backToTitleButton">Voltar</button>
           </div>
@@ -44,12 +57,24 @@
         </section>
 
         <section id="pausePanel" class="panel hidden">
-          <p class="eyebrow">Jogo pausado</p>
-          <h2>Pause</h2>
+          <p class="eyebrow">Um momento de descanso</p>
+          <h2>Pausa</h2>
           <div class="button-stack compact">
             <button id="resumeButton" class="primary">Continuar</button>
             <button id="backToMenuButton">Voltar ao menu</button>
           </div>
+
+          <details class="controls-help">
+            <summary>Controles</summary>
+            <dl>
+              <div><dt>Movimento</dt><dd>WASD / setas</dd></div>
+              <div><dt>Espada</dt><dd>Clique esquerdo / J</dd></div>
+              <div><dt>Magia</dt><dd>Clique direito / K</dd></div>
+              <div><dt>Interagir</dt><dd>E</dd></div>
+              <div><dt>Mochila · atributos · mapa</dt><dd>I · P · M</dd></div>
+              <div><dt>Pausa / continuar</dt><dd>Esc</dd></div>
+            </dl>
+          </details>
 
           <div class="two-column">
             <div class="slot-section">
@@ -64,8 +89,8 @@
         </section>
 
         <section id="gameOverPanel" class="panel hidden">
-          <p class="eyebrow">Voce caiu em batalha</p>
-          <h2>Game Over</h2>
+          <p class="eyebrow">Você caiu em batalha</p>
+          <h2>A jornada continua</h2>
           <div class="button-stack compact">
             <button id="retryButton" class="primary">Novo Jogo</button>
             <button id="gameOverMenuButton">Voltar ao menu</button>
@@ -77,16 +102,20 @@
         </section>
 
         <section id="mapPanel" class="panel map-panel hidden">
-          <h2>Exploracao</h2>
+          <div class="panel-header">
+            <div><p class="eyebrow">Caminhos descobertos</p><h2>Mapa</h2></div>
+            <button id="closeMapButton" class="close-button" aria-label="Fechar mapa">Fechar <kbd>M</kbd></button>
+          </div>
           <canvas id="mapCanvas" width="520" height="520"></canvas>
+          <p class="panel-footnote">Arraste para explorar o mapa.</p>
         </section>
 
         <section id="statsPanel" class="panel hidden">
           <div class="panel-header">
             <div>
-              <h2>Atributos</h2>
+              <p class="eyebrow">Seu aventureiro</p><h2>Atributos</h2>
             </div>
-            <button id="closeStatsButton" class="primary">Fechar</button>
+            <button id="closeStatsButton" class="close-button">Fechar <kbd>P</kbd></button>
           </div>
           <div id="statsOverview" class="stats-overview"></div>
           <div id="statsAllocation" class="stats-allocation"></div>
@@ -95,9 +124,9 @@
         <section id="inventoryPanel" class="panel inventory-panel hidden">
           <div class="panel-header">
             <div>
-              <h2>Inventario</h2>
+              <p class="eyebrow">Equipamento e recursos</p><h2>Inventário</h2>
             </div>
-            <button id="closeInventoryButton" class="primary">Fechar</button>
+            <button id="closeInventoryButton" class="close-button">Fechar <kbd>I</kbd></button>
           </div>
           <div class="inventory-workspace">
             <div class="inventory-hero-layout">
@@ -107,15 +136,14 @@
             <div class="inventory-workbench-layout">
               <div class="inventory-workbench-panel">
                 <div class="inventory-section-heading">
-                  <h3>Workbench</h3>
-                  <small>9 x 9</small>
+                  <h3>Bancada</h3>
+                  <small>3 × 3</small>
                 </div>
                 <div id="craftingWorkbench" class="crafting-workbench"></div>
               </div>
               <div class="inventory-output-panel">
                 <div class="inventory-section-heading">
-                  <h3>Saida</h3>
-                  <small>Preview</small>
+                  <h3>Resultado</h3>
                 </div>
                 <div id="craftingOutput" class="crafting-output"></div>
               </div>
@@ -123,7 +151,7 @@
           </div>
           <div class="inventory-storage">
             <div class="inventory-section-heading">
-              <h3>Inventario</h3>
+              <h3>Mochila</h3>
               <small id="inventoryCapacity"></small>
             </div>
             <div id="inventoryPanelGrid" class="inventory-panel-grid"></div>
@@ -131,12 +159,12 @@
         </section>
 
         <section id="questPanel" class="panel quest-panel hidden">
-          <p class="eyebrow">Quadro de missoes</p>
+          <p class="eyebrow">Quadro da aldeia</p>
           <div class="panel-header">
             <div>
-              <h2>Missoes</h2>
+              <h2>Missões</h2>
             </div>
-            <button id="closeQuestButton" class="primary">Fechar</button>
+            <button id="closeQuestButton" class="close-button">Fechar</button>
           </div>
           <div id="questBoardList" class="quest-list"></div>
         </section>

@@ -1,6 +1,7 @@
 import { PIXELS_PER_METER } from "../constants.js";
 import { GUIDE_NPC, GUIDE_NPC_TALK_DISTANCE, QUEST_SIGN, SPAWN_HOUSE_COLLIDER } from "../game-config.js";
 import { computeMoveSpeed } from "../state-helpers.js";
+import { updatePlayerAnimation } from "../state/player-animation.js";
 import { angleBetween, clamp, distance, normalize } from "../utils.js";
 import type { CameraState, Player } from "../types.js";
 import { World } from "../world.js";
@@ -41,9 +42,16 @@ export class MovementSystem {
       this.host.player.facingAngle = Math.atan2(move.y, move.x);
     }
 
+    const previousX = this.host.player.x;
+    const previousY = this.host.player.y;
     if (move.length > 0) {
       this.moveEntity(this.host.player, move.x * speed * dt, move.y * speed * dt);
     }
+    updatePlayerAnimation(
+      this.host.player,
+      dt,
+      Math.hypot(this.host.player.x - previousX, this.host.player.y - previousY)
+    );
 
     if (this.host.input.pressedKey("e")) {
       this.talkToGuideNpc();
