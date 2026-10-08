@@ -24,7 +24,7 @@ export class PlayerSpriteRenderer {
         this.image?.naturalHeight === PLAYER_SPRITE_CELL_SIZE * PLAYER_SPRITE_DIRECTIONS.length;
     };
     this.image.onerror = () => { this.loaded = false; };
-    this.image.src = "/assets/characters/blue-orb-knight.png";
+    this.image.src = "./assets/characters/blue-orb-knight.png";
   }
 
   draw(ctx: CanvasRenderingContext2D, player: Player, x: number, y: number, timestamp: number): boolean {

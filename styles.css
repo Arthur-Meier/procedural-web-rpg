@@ -15,7 +15,7 @@ body { user-select: none; }
 .hud { position: absolute; inset: 0; pointer-events: none; }
 .hud.hidden, .overlay-veil.hidden, .panel.hidden, .slot-section.hidden, .hud-message.hidden { display: none !important; }
 
-.ui-glyph { display: inline-block; flex: 0 0 24px; width: 24px; height: 24px; background-image: url('/assets/ui/ui-icons.png'); background-size: 240px 24px; background-position: calc(var(--glyph, 0) * -24px) 0; background-repeat: no-repeat; image-rendering: pixelated; vertical-align: middle; }
+.ui-glyph { display: inline-block; flex: 0 0 24px; width: 24px; height: 24px; background-image: url('./assets/ui/ui-icons.png'); background-size: 240px 24px; background-position: calc(var(--glyph, 0) * -24px) 0; background-repeat: no-repeat; image-rendering: pixelated; vertical-align: middle; }
 .glyph-crest { --glyph: 0; } .glyph-heart { --glyph: 1; } .glyph-coin { --glyph: 2; } .glyph-sun { --glyph: 3; } .glyph-sword { --glyph: 4; } .glyph-staff { --glyph: 5; } .glyph-bag { --glyph: 6; } .glyph-map { --glyph: 7; } .glyph-stats { --glyph: 8; } .glyph-pause { --glyph: 9; }
 kbd { display: inline-grid; place-items: center; min-width: 20px; height: 20px; padding: 0 4px; border: 1px solid #d3dccc30; border-radius: 3px; color: var(--muted); font: 11px "Segoe UI", sans-serif; }
 
@@ -105,7 +105,7 @@ button:focus-visible, summary:focus-visible, [role="button"]:focus-visible { out
 .title-tree-back { width: 320px; left: 110px; top: 0; opacity: .35; }
 .title-tree-oak { width: 440px; left: -24px; top: 58px; opacity: .9; animation-delay: -2s; }
 .title-tree-birch { width: 330px; right: -15px; top: 122px; opacity: .7; animation-delay: -4s; }
-.character-portrait { display: block; width: 192px; height: 192px; background: url('/assets/characters/blue-orb-knight.png') 0 0 / 1344px 1536px no-repeat; image-rendering: pixelated; }
+.character-portrait { display: block; width: 192px; height: 192px; background: url('./assets/characters/blue-orb-knight.png') 0 0 / 1344px 1536px no-repeat; image-rendering: pixelated; }
 .title-traveler { position: absolute; left: 235px; bottom: 0; z-index: 1; }
 @keyframes panel-enter { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes title-breeze { from { transform: rotate(-.6deg); } to { transform: rotate(.7deg); } }
@@ -694,7 +694,7 @@ button:focus-visible, summary:focus-visible, [role="button"]:focus-visible { out
 .slot-token.token-stone,
 .slot-token.token-gold {
   background-color: transparent;
-  background-image: url("/assets/items/loot-items.png");
+  background-image: url("./assets/items/loot-items.png");
   background-size: 500% 100%;
   background-repeat: no-repeat;
   border-radius: 0;

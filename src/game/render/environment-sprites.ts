@@ -66,7 +66,7 @@ export class EnvironmentSpriteRenderer {
         this.windLoaded = this.windImage?.naturalWidth === 6144 && this.windImage?.naturalHeight === 256;
       };
       this.windImage.onerror = () => { this.windLoaded = false; };
-      this.windImage.src = "/assets/environment/tree-wind.png";
+      this.windImage.src = "./assets/environment/tree-wind.png";
     }
     if (!this.image) {
       return;
@@ -76,7 +76,7 @@ export class EnvironmentSpriteRenderer {
         this.image?.naturalHeight === ENVIRONMENT_SPRITE_CELL_SIZE * ENVIRONMENT_SPRITE_ROWS;
     };
     this.image.onerror = () => { this.loaded = false; };
-    this.image.src = "/assets/environment/forest-props.png";
+    this.image.src = "./assets/environment/forest-props.png";
   }
 
   draw(ctx: CanvasRenderingContext2D, id: EnvironmentSpriteId, x: number, baseY: number, size: number, windFrame?: number): boolean {

@@ -63,7 +63,7 @@ export class TerrainTextures {
         this.revision += 1;
       };
       image.onerror = () => { texture.loaded = false; };
-      image.src = `/assets/environment/${name}.png`;
+      image.src = `./assets/environment/${name}.png`;
     }
     return texture;
   }

@@ -34,7 +34,7 @@ export class MageSpriteRenderer {
       this.loaded=this.image?.naturalWidth===MAGE_SPRITE_CELL_SIZE*MAGE_SPRITE_FRAMES && this.image?.naturalHeight===MAGE_SPRITE_CELL_SIZE;
     };
     this.image.onerror=()=>{this.loaded=false;};
-    this.image.src="/assets/enemies/red-mage.png";
+    this.image.src="./assets/enemies/red-mage.png";
   }
 
   draw(ctx: CanvasRenderingContext2D, enemy: EnemyEntity, x:number, groundY:number, radius:number, timestamp:number, cast?:PendingSpellCast): boolean {

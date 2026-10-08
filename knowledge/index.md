@@ -13,7 +13,7 @@ Este é o ponto de entrada para o conhecimento técnico do projeto. A base segue
 | [Arquitetura atual](concepts/architecture.md) | Composição do jogo, sistemas, loop, servidor e limites de responsabilidade. |
 | [Mundo procedural](concepts/procedural-world.md) | Seed, chunks, descoberta, mutações e compatibilidade do mundo salvo. |
 | [Saves e sessões](concepts/save-system.md) | Snapshot v4, localStorage, reconstrução do estado e limites de compatibilidade. |
-| [Renderização e assets](concepts/rendering-assets.md) | Canvas, sprites e profundidade, grama com lâminas/tufos nítidos por amostragem direta da arte original, árvores/folhas ao vento, interface minimalista, HUD e glyphs Aseprite. |
+| [Renderização e assets](concepts/rendering-assets.md) | Canvas, sprites e profundidade, caminhos relativos compatíveis com GitHub Pages, grama com lâminas/tufos nítidos por amostragem direta da arte original, árvores/folhas ao vento, interface minimalista, HUD e glyphs Aseprite. |
 | [Manutenção do conhecimento](concepts/knowledge-maintenance.md) | Perfil OKF, ciclo de ADR, validação, Graphify, arquivos versionados/exclusões locais e limites de evidência. |
 
 ## Decisões arquiteturais

@@ -2,6 +2,12 @@
 
 Entradas registram mudanças materiais de documentação e sua evidência. Resultados de testes e revisões só devem ser acrescentados após sua execução, com o comando ou a identidade da revisão correspondente.
 
+## 2026-10-08
+
+- Corrigidos os caminhos de sprites de cenário, árvores ao vento, folhas, jogador, slime, mago, drops, materiais e imagens CSS para `./assets/...`. Os PNGs existentes foram preservados. Em consultas HTTP, seis atlas publicados em `/procedural-web-rpg/assets/` corresponderam byte a byte ao checkout `e88ce074d17fa371218bf899a60f9757e6d07f5a`; os mesmos caminhos na raiz `/assets/` retornaram 404, explicando a ativação dos desenhos de fallback. Conceito de renderização, fontes, data e índice atualizados; nenhuma mudança material de arquitetura ou regras de gameplay.
+- Criado `scripts/validate-pages-paths.mjs`, que instancia os loaders compilados com uma sonda de URLs de Image e serve arquivos locais em mounts isolados. Antes da alteração, falhou com doze requisições 404 na subpasta. Após `npm run build`, aprovou trinta verificações HTTP/bytes na raiz e em `/procedural-web-rpg/`, incluindo URLs CSS e imagens do HTML. Esse teste não decodifica imagens em navegador nem valida Canvas, animações, gameplay ou saves.
+- A validação visual por Chromium não foi executada: não havia executável instalado, e o download do Playwright retornou um arquivo inválido/truncado. O provider Graphify não está instalado neste checkout; refresh e status com `--check` não foram executados. As dependências foram inspecionadas nas fontes e por `knowledge:impact`. Esta entrada não atribui publicação no GitHub, aprovação humana, revisão semântica ou validação visual à correção local.
+
 ## 2026-10-03
 
 - Pedido explícito para preparar os arquivos pertinentes com `git add` e excluir arquivos locais pelo `.gitignore`. Regras ampliadas para cobertura/caches, diário local, logs, editor/SO, temporários/backups, chaves e arquivos locais de banco; dependências, build, runtime e evidências já eram excluídos. Código, testes, CI, conhecimento, referências/fontes e exports de arte permanecem elegíveis. Conceito de manutenção, fontes, data e índice atualizados; nenhuma nova decisão material de arquitetura. As exclusões não removem arquivos do disco e preparar stage não autoriza commit/push.

@@ -5,7 +5,7 @@ title: Renderização Canvas e contratos de assets
 status: draft
 implementation_status: observed
 created: 2026-10-02
-updated: 2026-10-03
+updated: 2026-10-08
 sources:
   - resource: ../../src/game/render/world-renderer.ts
   - resource: ../../src/game/render/environment-sprites.ts
@@ -68,6 +68,7 @@ sources:
   - resource: ../../docs/ART_DIRECTION.md
   - resource: ../../scripts/prepare-slime-assets.mjs
   - resource: ../../scripts/validate-slime-sprite.mjs
+  - resource: ../../scripts/validate-pages-paths.mjs
 relates_to: [architecture, procedural-world, ADR-0002]
 tags: [rendering, canvas, assets, sprites, depth]
 ---
@@ -81,6 +82,8 @@ tags: [rendering, canvas, assets, sprites, depth]
 `drawWorldDepth()` ordena objetos, inimigos, casa, NPC, placa e jogador pela coordenada Y do contato com o chão. Assim o ponto de contato determina a sobreposição de sprites altos. Painéis, slots e overlays são DOM; sua apresentação é coordenada separadamente pelo [OverlayController](../../src/game/ui/overlay-controller.ts).
 
 ## Assets e fallbacks
+
+Os loaders de sprites, materiais e folhas usam `./assets/...`, relativo ao documento; URLs de imagens em CSS são relativas ao arquivo `styles.css`. A estrutura publicada mantém HTML, CSS, `assets/` e `dist/` juntos, permitindo carregar o mesmo PNG na raiz local ou em `/procedural-web-rpg/` no GitHub Pages. URLs com `/assets/...` buscavam a raiz do domínio, retornavam 404 no Pages e acionavam os desenhos de fallback. O [validador de caminhos](../../scripts/validate-pages-paths.mjs), executado após o build, instancia os loaders compilados com uma sonda de requisições de Image e confere por HTTP os bytes dos assets em ambos os mounts, incluindo CSS e imagens do HTML. Ele não valida decodificação no navegador, desenho Canvas, animações ou gameplay.
 
 O [atlas de cenário](../../src/game/render/environment-sprites.ts) possui células de 256 × 256 em uma grade 3 × 3, com âncora de contato em `(128, 224)`. A escolha visual e a escala de objetos quebráveis combinam seu ID com a seed, sem alterar a posição de gameplay. A imagem só é considerada carregada quando suas dimensões correspondem ao contrato; a chamada de desenho retorna `false` quando indisponível.
 

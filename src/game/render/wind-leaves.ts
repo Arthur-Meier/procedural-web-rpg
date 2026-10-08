@@ -15,7 +15,7 @@ export class WindLeavesLayer extends WorldRenderLayerBase {
     if (this.image) {
       this.image.onload = () => { this.loaded = this.image?.naturalWidth === 192 && this.image?.naturalHeight === 16; };
       this.image.onerror = () => { this.loaded = false; };
-      this.image.src = "/assets/environment/wind-leaves.png";
+      this.image.src = "./assets/environment/wind-leaves.png";
     }
   }
 

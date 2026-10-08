@@ -34,7 +34,7 @@ export class SlimeSpriteRenderer {
         this.image?.naturalHeight === SLIME_SPRITE_HEIGHT;
     };
     this.image.onerror = () => { this.loaded = false; };
-    this.image.src = "/assets/enemies/blue-slime.png";
+    this.image.src = "./assets/enemies/blue-slime.png";
   }
 
   draw(ctx: CanvasRenderingContext2D, enemy: EnemyEntity, x: number, groundY: number, radius: number, timestamp: number): boolean {

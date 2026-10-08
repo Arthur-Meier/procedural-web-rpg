@@ -21,7 +21,7 @@ export class ItemSpriteRenderer {
         this.image?.naturalHeight === ITEM_SPRITE_CELL_SIZE;
     };
     this.image.onerror = () => { this.loaded = false; };
-    this.image.src = "/assets/items/loot-items.png";
+    this.image.src = "./assets/items/loot-items.png";
   }
 
   draw(ctx: CanvasRenderingContext2D, drop: Drop, x: number, y: number, groundY: number): boolean {
